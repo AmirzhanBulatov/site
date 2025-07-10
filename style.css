@@ -55,3 +55,16 @@ header {
     align-items: center;
   }
 }
+
+ul {
+  
+  padding-left: 1.25;  /* убирает стандартный отступ */
+  text-align: left; /* явно по левому краю */
+}
+
+.text {
+  display: inline-block; 
+  margin-top: 10px;
+  text-decoration: none;
+  color: blue;
+}
