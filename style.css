@@ -12,6 +12,57 @@ header {
   padding: 20px;
 }
 
+
+/* Общий стиль навигации */
+nav {
+  background-color: #333;  /* Цвет фона */
+  padding: 10px 0;
+  text-align: center;      /* Центрируем ссылки по горизонтали */
+}
+
+nav ul {
+  list-style: none;  /* Убираем маркеры списка */
+  margin: 0;
+  padding: 0;
+  display: flex;         /* Делаем горизонтальное меню */
+  justify-content: left; /* Центрируем ссылки */
+  gap: 30px;             /* Расстояние между пунктами */
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+nav ul li a {
+  color: #fff;                 /* Цвет текста */
+  text-decoration: none;       /* Без подчеркивания */
+  font-size: 18px;
+  padding: 8px 16px;           /* Отступы вокруг текста */
+  border-radius: 4px;          /* Скругляем углы при наведении */
+  transition: background 0.3s; /* Плавный ховер */
+}
+
+nav ul li a:hover {
+  background-color: #555; /* Цвет фона при наведении */
+}
+
+
+.logo-container {
+  display: flex;
+  align-items: center; /* выравнивание по вертикали */
+}
+
+.logo-container img.logo {
+  width: 250px;   /* ширина логотипа */
+  height: auto;
+  margin-right: 435px; /* отступ между лого и текстом */
+}
+
+.logo-container h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -68,3 +119,57 @@ ul {
   text-decoration: none;
   color: blue;
 }
+
+
+
+/* Контакты */
+
+
+.contacts {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.contacts h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.contacts ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contacts li {
+  margin: 10px 0;
+}
+
+.contacts a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #007bff;
+}
+
+.contacts a:hover {
+  text-decoration: underline;
+}
+
+
+.contacts ul li a {
+  display: inline-flex;  /* чтобы иконка и текст были на одной линии */
+  align-items: center;   /* выравниваем по вертикали */
+  text-decoration: none;
+  font-size: 20px;
+  color: #007bff;
+}
+
+.contacts ul li a img {
+  width: 50px;           /* размер иконки */
+  height: 50px;
+  margin-right: 8px;     /* отступ между иконкой и текстом */
+}
+
+.contacts ul li a:hover {
+  text-decoration: underline;
+}
+
