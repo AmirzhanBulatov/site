@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,6 @@
     <header class="header">
         <div class="logo">
             <img src="images/logo.png" alt="China Avto Logo">
-        </div>
-        <div class="language-switch">
-            <button class="lang-btn active" onclick="switchLanguage('ru')">Русский</button>
-            <button class="lang-btn" onclick="switchLanguage('kz')">Қазақша</button>
         </div>
     </header>
 
@@ -79,14 +75,26 @@
 
         <main class="main-content">
             <div class="nav-tabs">
-                <button class="tab-btn active" onclick="showTab('catalog')" data-ru="Каталог" data-kz="Каталог">Каталог</button>
-                <button class="tab-btn" onclick="showTab('favorites')" data-ru="Избранное" data-kz="Таңдаулылар">Избранное</button>
-            </div>
+    <div class="tabs-section">
+        <button class="tab-btn active" onclick="showTab('catalog')" data-ru="Каталог" data-kz="Каталог">Каталог</button>
+        <button class="tab-btn" onclick="showTab('favorites')" data-ru="Избранное" data-kz="Таңдаулылар">Избранное</button>
+    </div>
+    <div class="language-switch">
+        <button class="lang-btn" onclick="switchLanguage('ru')">Русский</button>
+        <button class="lang-btn active" onclick="switchLanguage('kz')">Қазақша</button>
+    </div>
+</div>
+
 
             <div id="catalogTab">
                 <div class="sort-controls">
-  <button class="sort-btn" onclick="sortCars('price')" data-ru="По цене" data-kz="Баға бойынша">По цене</button>
-  <button class="sort-btn" onclick="sortCars('year')" data-ru="По году" data-kz="Жыл бойынша">По году</button>
+  <button class="sort-btn" onclick="sortCars('price')" data-type="price" data-order="asc">
+  По цене <span class="arrow"></span>
+</button>
+<button class="sort-btn" onclick="sortCars('year')" data-type="year" data-order="asc">
+  По году <span class="arrow"></span>
+</button>
+
   <button class="filter-toggle-btn" onclick="toggleFilterSidebar()" title="Фильтры">
     <i class="fas fa-sliders-h" style="color: #888686;"></i>></i>
   </button>

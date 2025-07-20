@@ -29,32 +29,27 @@
         }
 
         .logo img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             margin-right: 10px;
             border-radius: 50%;
         }
 
-        .language-switch {
-            display: flex;
-            gap: 10px;
-        }
 
-        .lang-btn {
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
+        @media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
-        .lang-btn:hover, .lang-btn.active {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
+    .logo img {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 10px auto;
+    }
+}
+
 
         /* Main Content */
         .container {
@@ -83,31 +78,31 @@
         }
 
         .filter-toggle-btn {
-  background: rgba(255,255,255,0.2);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 10px;
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-left: auto;
-}
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: auto;
+        }
 
-.filter-sidebar {
-  position: fixed;
-  bottom: -100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  z-index: 1000;
-  transition: bottom 0.3s ease;
-  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  padding: 1rem;
-  max-height: 80%;
-  overflow-y: auto;
-}
+        .filter-sidebar {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            transition: bottom 0.3s ease;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            padding: 1rem;
+            max-height: 80%;
+            overflow-y: auto;
+        }
 
 .filter-sidebar.active {
   bottom: 0;
@@ -199,6 +194,13 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(134,142,150,0.4);
         }
+
+
+        .sort-btn .arrow {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
 
         /* Car Cards */
         .cars-grid {
@@ -511,34 +513,62 @@
 
         /* Navigation */
         .nav-tabs {
-            background: white;
-            border-radius: 15px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
 
-        .tab-btn {
-            padding: 10px 20px;
-            background: transparent;
-            border: 2px solid #868e96;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #495057;
-            font-weight: 500;
-        }
+.tabs-section {
+    display: flex;
+    gap: 1rem;
+}
 
-        .tab-btn.active, .tab-btn:hover {
-            background: #868e96;
-            color: white;
-        }
+.language-switch {
+    display: flex;
+    gap: 10px;
+}
 
-        .hidden {
-            display: none;
-        }
+.lang-btn {
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.2);
+    color: #495057;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.lang-btn:hover, .lang-btn.active {
+    background: rgba(134, 142, 150, 0.3);
+    transform: translateY(-2px);
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid #868e96;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #495057;
+    font-weight: 500;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: #868e96;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
 
         /* Responsive */
         @media (max-width: 1024px) {

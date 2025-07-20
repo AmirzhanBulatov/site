@@ -1,4 +1,10 @@
-let currentLanguage = 'ru';
+// В самом начале скрипта, после загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+    switchLanguage('kz'); // Устанавливаем казахский язык по умолчанию
+});
+
+
+let currentLanguage = 'kz';
         let carsData = [
             {
                 id: 1,
@@ -89,14 +95,37 @@ let currentLanguage = 'ru';
         };
 
         function switchLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            document.querySelectorAll('[data-ru]').forEach(el => {
-                el.textContent = el.getAttribute('data-' + lang);
-            });
+    // Переключение активной кнопки языка
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if ((lang === 'ru' && btn.textContent === 'Русский') || 
+            (lang === 'kz' && btn.textContent === 'Қазақша')) {
+            btn.classList.add('active');
         }
+    });
+
+    // Обновление текстовых элементов
+    document.querySelectorAll('[data-ru], [data-kz]').forEach(element => {
+        if (lang === 'ru') {
+            if (element.hasAttribute('data-ru')) {
+                element.textContent = element.getAttribute('data-ru');
+            }
+            if (element.hasAttribute('placeholder-ru')) {
+                element.setAttribute('placeholder', element.getAttribute('placeholder-ru'));
+            }
+        } else if (lang === 'kz') {
+            if (element.hasAttribute('data-kz')) {
+                element.textContent = element.getAttribute('data-kz');
+            }
+            if (element.hasAttribute('placeholder-kz')) {
+                element.setAttribute('placeholder', element.getAttribute('placeholder-kz'));
+            }
+        }
+    });
+
+    // Обновление других элементов интерфейса, если необходимо
+    // ...
+}
 
         function updateModelFilter() {
             const brandFilter = document.getElementById('brandFilter');
@@ -135,14 +164,42 @@ let currentLanguage = 'ru';
             renderCars();
         }
 
-        function sortCars(type) {
-            if (type === 'price') {
-                filteredCars.sort((a, b) => a.price - b.price);
-            } else if (type === 'year') {
-                filteredCars.sort((a, b) => b.year - a.year);
-            }
-            renderCars();
-        }
+        let currentSort = {
+    type: null,
+    order: 'asc'
+  };
+
+  function sortCars(type) {
+    const buttons = document.querySelectorAll('.sort-btn');
+
+    if (currentSort.type === type) {
+      // Переключаем порядок
+      currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+    } else {
+      currentSort.type = type;
+      currentSort.order = 'asc';
+    }
+
+    if (type === 'price') {
+      filteredCars.sort((a, b) => currentSort.order === 'asc' ? a.price - b.price : b.price - a.price);
+    } else if (type === 'year') {
+      filteredCars.sort((a, b) => currentSort.order === 'asc' ? a.year - b.year : b.year - a.year);
+    }
+
+    // Обновляем стрелки
+    buttons.forEach(btn => {
+      const btnType = btn.getAttribute('data-type');
+      const arrow = btn.querySelector('.arrow');
+      if (btnType === currentSort.type) {
+        arrow.innerHTML = currentSort.order === 'asc' ? '▲' : '▼';
+      } else {
+        arrow.innerHTML = '';
+      }
+    });
+
+    renderCars();
+  }
+
 
         function renderCars() {
             const grid = document.getElementById('carsGrid');
