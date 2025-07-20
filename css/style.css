@@ -533,8 +533,7 @@
 
 .language-switch {
     display: flex;
-    gap: 10px;
-    justify-content: center;
+    gap: 1rem;
 }
 
 .lang-btn {
