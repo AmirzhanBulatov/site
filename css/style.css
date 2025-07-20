@@ -513,39 +513,40 @@
 
         /* Navigation */
         .nav-tabs-container {
-    background: white;
-    border-radius: 15px;
-    padding: 1rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .nav-tabs {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .tabs-section {
     display: flex;
     gap: 1rem;
+    justify-content: center;
 }
 
 .language-switch {
     display: flex;
-    justify-content: center;
     gap: 10px;
+    justify-content: center;
 }
 
 .lang-btn {
-    padding: 8px 16px;
+    padding: 6px 12px;
     background: rgba(255,255,255,0.2);
     color: #495057;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    font-size: 0.9em;
 }
 
 .lang-btn:hover, .lang-btn.active {
