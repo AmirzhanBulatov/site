@@ -354,6 +354,19 @@ let currentLanguage = 'ru';
             `;
         }
 
+        function toggleFilterSidebar() {
+        const sidebar = document.getElementById('filterSidebar');
+        const overlay = document.getElementById('filterOverlay');
+
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        }
+
+        function closeFilterSidebar() {
+        document.getElementById('filterSidebar').classList.remove('active');
+        document.getElementById('filterOverlay').classList.remove('active');
+        }
+
         function closeDetail() {
             document.getElementById('detailFrame').classList.remove('open');
         }
