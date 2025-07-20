@@ -529,7 +529,6 @@
 .tabs-section {
     display: flex;
     gap: 1rem;
-    justify-content: center;
 }
 
 .language-switch {
