@@ -512,16 +512,18 @@
         }
 
         /* Navigation */
-        .nav-tabs {
+        .nav-tabs-container {
     background: white;
     border-radius: 15px;
     padding: 1rem;
     margin-bottom: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .tabs-section {
@@ -531,6 +533,7 @@
 
 .language-switch {
     display: flex;
+    justify-content: center;
     gap: 10px;
 }
 
