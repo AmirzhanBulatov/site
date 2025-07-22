@@ -62,7 +62,7 @@
         }
 
         .sidebar {
-            width: 1490px;
+            width: 1650px;
             background: white;
             border-radius: 15px;
             padding: 1.5rem;
@@ -237,9 +237,9 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
-        .car-image {
-            width: 250px;
-            height: 180px;
+        .car-image img{
+            width: 300px;
+            height: 300px;
             border-radius: 15px;
             background: #f0f0f0;
             display: flex;
@@ -316,6 +316,7 @@
             background: #ff6b6b;
             color: white;
         }
+        
 
         /* Detail Frame */
         .detail-frame {
@@ -357,9 +358,9 @@
             transform: rotate(90deg) scale(1.1);
         }
 
-        .detail-image {
-            width: 100%;
-            height: 250px;
+        .detail-image img{
+            width: 530px;
+            height: 500px;
             background: linear-gradient(135deg, #e9ecef 0%, #ced4da 100%);
             border-radius: 15px;
             display: flex;
@@ -593,8 +594,204 @@
                 flex-direction: column;
             }
             
-            .car-image {
-                width: 100%;
-                height: 200px;
-            }
+            .car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+        }
+
+
+        .loading, .error-message {
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #495057;
+}
+
+.error-message button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #495057;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+/* Стили для галереи изображений */
+.car-gallery {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.car-gallery-container {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+
+.car-gallery-image {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px; /* Регулируйте это значение по своему вкусу */
+    overflow: hidden; /* Это важно, чтобы скругление работало */
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.gallery-nav-btn {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.gallery-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.gallery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.gallery-dot.active {
+    background: white;
+}
+
+
+
+
+
+
+/* Добавленные стили для галереи в карточках */
+        .car-image-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+        
+        .car-image-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+        
+        .car-image-slide {
+            min-width: 100%;
+            height: 100%;
+        }
+        
+        .car-image-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .car-image-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .car-card:hover .car-image-nav {
+            opacity: 1;
+        }
+        
+        .car-image-btn {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+        }
+        
+        .car-image-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            z-index: 2;
+        }
+        
+        .car-image-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .car-image-dot.active {
+            background: white;
+        }
+        
+        /* Затемнение для закрытия фрейма */
+        .detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .detail-overlay.active {
+            display: block;
         }
