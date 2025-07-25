@@ -710,7 +710,6 @@ document.getElementById('brandFilter').addEventListener('change', function() {
 });
 
 document.getElementById('modelFilter').addEventListener('change', applyFilters);
-document.getElementById('bodyFilter').addEventListener('change', applyFilters);
 document.getElementById('customsFilter').addEventListener('change', applyFilters);
 document.getElementById('yearFrom').addEventListener('input', applyFilters);
 document.getElementById('yearTo').addEventListener('input', applyFilters);
