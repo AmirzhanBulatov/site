@@ -29,26 +29,47 @@
         }
 
         .logo img {
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 170px;
             margin-right: 10px;
             border-radius: 50%;
         }
 
 
-        @media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .logo img {
-        width: 200px;
-        height: 200px;
-        margin: 0 auto 10px auto;
-    }
+        .bank-logos {
+  display: flex;
+  justify-content: center; /* Центрирование по горизонтали */
+  gap: 5px; /* Небольшой отступ — для лёгкого перекрытия */
+  margin-top: -10px; /* Поднять ближе к логотипу, если нужно */
+  position: relative;
+  z-index: 1;
 }
+
+.bank-logos img {
+  height: 25px;
+  object-fit: contain;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .logo img {
+    width: 200px;
+    height: 170px;
+    margin: 0 auto 10px auto;
+  }
+
+  .bank-logos {
+    justify-content: center;
+    margin-top: -5px;
+  }
+}
+
 
 
         /* Main Content */
@@ -458,6 +479,34 @@
             border-bottom: 1px solid #e9ecef;
         }
 
+        .close-btn-mobile {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+    .close-btn-mobile {
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        z-index: 1100;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .close-btn-mobile:hover {
+        transform: scale(1.1);
+    }
+}
+
         /* Modal */
         .modal {
             display: none;
@@ -795,3 +844,14 @@
         .detail-overlay.active {
             display: block;
         }
+
+
+
+
+        .installment-label {
+    margin-top: 0.5rem;
+    text-align: left;
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1rem;
+}

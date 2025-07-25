@@ -48,34 +48,42 @@ async function loadCars() {
             const data = doc.data();
             return {
                 id: doc.id,
-                brand: data.brand || "Unknown",
-                model: data.model || "Unknown",
-                name: data.name || `${data.brand || ''} ${data.model || ''}`.trim(),
-                description: data.description || "Описание отсутствует",
-                price: data.price || 0,
-                year: data.year || new Date().getFullYear(),
-                address: data.address || "Адрес не указан",
-                body: data.body || "Не указан",
-                customs: data.customs || "нет",
-                drive: data.drive || "Не указан",
-                engine: data.engine || "Не указан",
-                fuel: data.fuel || "Не указан",
-                color: data.color || "Не указан",
-                mileage: data.mileage || "0",
-                transmission: data.transmission || "Не указана",
-                averagePrice: data.averagePrice || data.price || 0,
-                images: data.images || [data.imageUrl || 'https://via.placeholder.com/300'],
-                createdAt: data.createdAt?.toDate() || new Date()
+                // Основная информация
+                brand: data.brand || null,
+                model: data.model || null,
+                name: data.name || null,
+                year: data.year || null,
+                address: data.address || null,
+                color: data.color || null,
+                
+                // Технические характеристики
+                transmission: data.transmission || null,
+                engineType: data.engineType || null,
+                engine: data.engine || null,
+                torque: data.torque || null,
+                power: data.power || null,
+                maxSpeed: data.maxSpeed || null,
+                acceleration: data.acceleration || null,
+                dimensions: data.dimensions || null,
+                tireSize: data.tireSize || null,
+                
+                // Изображения и дата
+                images: data.images || [],
+                createdAt: data.createdAt?.toDate() || null
             };
         });
         
         // Собираем уникальные бренды и модели
         brandsAndModels = {};
         carsData.forEach(car => {
-            if (!brandsAndModels[car.brand]) {
-                brandsAndModels[car.brand] = new Set();
+            if (car.brand) {
+                if (!brandsAndModels[car.brand]) {
+                    brandsAndModels[car.brand] = new Set();
+                }
+                if (car.model) {
+                    brandsAndModels[car.brand].add(car.model);
+                }
             }
-            brandsAndModels[car.brand].add(car.model);
         });
         
         // Обновляем фильтры
@@ -383,6 +391,7 @@ function renderFavorites() {
     });
 }
 
+// Обновленная функция createCarCard без цены
 function createCarCard(car, gallery) {
     const carCard = document.createElement('div');
     carCard.className = 'car-card';
@@ -410,17 +419,18 @@ function createCarCard(car, gallery) {
                 </div>
             ` : ''}
         </div>
-         <div class="car-info">
+
+        <div class="installment-label">Рассрочка 0-0-24</div>
+
+        <div class="car-info">
             <h3 class="car-title">${car.name}</h3>
-            <p class="car-description">${car.description}</p>
             <div class="car-details">
                 <div class="car-detail">Год: ${car.year}</div>
-                <div class="car-detail">Кузов: ${car.body}</div>
-                <div class="car-detail">Адрес: ${car.address}</div>
-                <div class="car-detail">Растаможен: ${car.customs}</div>
+                <div class="car-detail">КПП: ${car.transmission}</div>
+                <div class="car-detail">Тип двигателя: ${car.engineType}</div>
             </div>
-            <div class="car-price">${car.price.toLocaleString()} ₸</div>
         </div>
+
         <button class="favorite-btn ${favorites.includes(car.id) ? 'active' : ''}" 
                 onclick="toggleFavorite('${car.id}', event)">
             ❤️
@@ -430,6 +440,7 @@ function createCarCard(car, gallery) {
     carCard.addEventListener('click', () => showCarDetail(car));
     return carCard;
 }
+
 
 // ИСПРАВЛЕНА: Функция обновления галереи в карточках
 function updateCardGallery(carId) {
@@ -503,12 +514,47 @@ function showCarDetail(car) {
 
     detailOverlay.classList.add('active');
     
-    const savings = car.averagePrice - car.price;
-    const savingsPercent = Math.round((savings / car.averagePrice) * 100);
-    
     const images = car.images || [car.imageUrl || 'https://via.placeholder.com/300'];
     
+    // Функция для проверки, нужно ли отображать поле
+    const shouldShowField = (value) => value !== null && value !== undefined && value !== '';
+    
+    // Функция для форматирования значений
+    const formatValue = (value, suffix = '') => {
+        if (value === null || value === undefined) return '';
+        if (typeof value === 'number' && suffix === ' ₸') {
+            return value.toLocaleString() + suffix;
+        }
+        return value + suffix;
+    };
+
+    // Генерация HTML для характеристик
+    const characteristicsHTML = [
+        { label: 'Адрес', value: car.address },
+        { label: 'Год выпуска', value: car.year },
+        { label: 'Цвет', value: car.color },
+        { label: 'КПП', value: car.transmission },
+        { label: 'Тип двигателя', value: car.engineType },
+        { label: 'Объем двигателя', value: car.engine, suffix: 'L' },
+        { label: 'Мощность', value: car.power, suffix: ' л.с.' },
+        { label: 'Крутящий момент', value: car.torque, suffix: ' Н·м' },
+        { label: 'Макс. скорость', value: car.maxSpeed, suffix: ' км/ч' },
+        { label: 'Разгон 0-100 км/ч', value: car.acceleration, suffix: ' сек' },
+        { label: 'Габариты (Д×Ш×В)', value: car.dimensions, suffix: ' мм' },
+        { label: 'Размер шин', value: car.tireSize }
+    ]
+    .filter(item => item.value !== null && item.value !== undefined && item.value !== '')
+    .filter(item => shouldShowField(item.value))
+    .map(item => `
+        <div class="char-item">
+            <span>${item.label}:</span>
+            <span>${formatValue(item.value, item.suffix || '')}</span>
+        </div>
+    `).join('');
+
     detailContent.innerHTML = `
+        <button class="close-btn-mobile" onclick="closeDetail()">✕</button>   
+
         <div class="car-gallery">
             <div class="car-gallery-container" id="galleryContainer">
                 ${images.map(img => `
@@ -528,86 +574,18 @@ function showCarDetail(car) {
             </div>
         </div>
         <h2>${car.name}</h2>
-        <div class="car-price">${car.price.toLocaleString()} ₸</div>
-        <p>${car.description}</p>
-        
-        <div class="price-comparison">
-            <h4>Сравнение цен</h4>
-            <p>Средняя цена в других автосалонах: <strong>${car.averagePrice.toLocaleString()} ₸</strong></p>
-            <p>Наша цена: <strong>${car.price.toLocaleString()} ₸</strong></p>
-            <p style="color: #51cf66; font-weight: bold;">
-                Вы экономите: ${savings.toLocaleString()} ₸ (${savingsPercent}%)
-            </p>
-        </div>
-        
-        <div class="bank-offers">
-            <h4>Предложения от банков</h4>
-            <p><strong>Стоимость автомобиля:</strong> ${car.price.toLocaleString()} ₸</p>
-            <p><strong>Первоначальный взнос:</strong> ${(car.price * 0.1).toLocaleString()} ₸</p>
-            
-            <div class="month-options">
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 12)">12 мес</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 24)">24 мес</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 36)">36 мес</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 48)">48 мес</div>
-            </div>
-            
-            <div class="payment-info" id="paymentInfo">
-                <p>Выберите срок кредитования</p>
-            </div>
-
-            <h5 class="text-muted">Указанный расчет имеет неточные вычисления. Уточните у менеджера точные условия.</h5>
-            
-            <button class="apply-btn" onclick="showApplicationForm('${car.id}', '${car.name.replace(/'/g, "\\'")}')">
-                Отправить заявку
-            </button>
-        </div>
+        ${shouldShowField(car.description) ? `<p>${car.description}</p>` : ''}
         
         <div class="characteristics">
             <h4>Характеристики</h4>
             <div class="char-grid">
-                <div class="char-item">
-                    <span>Адрес:</span>
-                    <span>${car.address}</span>
-                </div>
-                <div class="char-item">
-                    <span>Кузов:</span>
-                    <span>${car.body}</span>
-                </div>
-                <div class="char-item">
-                    <span>Год выпуска:</span>
-                    <span>${car.year}</span>
-                </div>
-                <div class="char-item">
-                    <span>Растаможен:</span>
-                    <span>${car.customs}</span>
-                </div>
-                <div class="char-item">
-                    <span>Привод:</span>
-                    <span>${car.drive}</span>
-                </div>
-                <div class="char-item">
-                    <span>Объем двигателя:</span>
-                    <span>${car.engine}L</span>
-                </div>
-                <div class="char-item">
-                    <span>Тип топлива:</span>
-                    <span>${car.fuel}</span>
-                </div>
-                <div class="char-item">
-                    <span>Цвет:</span>
-                    <span>${car.color}</span>
-                </div>
-                <div class="char-item">
-                    <span>Пробег:</span>
-                    <span>${car.mileage} км</span>
-                </div>
-                <div class="char-item">
-                    <span>КПП:</span>
-                    <span>${car.transmission}</span>
-                </div>
+                ${characteristicsHTML}
             </div>
         </div>
+        
+        <button class="apply-btn" onclick="showApplicationForm('${car.id}', '${car.name.replace(/'/g, "\\'")}')">
+            Отправить заявку
+        </button>
     `;
     
     initDetailGallery(images.length);
@@ -707,28 +685,6 @@ function goToImage(index) {
     updateGallery();
 }
 
-function calculatePayment(price, months) {
-    document.querySelectorAll('.month-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    
-    const downPayment = price * 0.1;
-    const loanAmount = price - downPayment;
-    const interestRate = 0.15; // 15% годовых
-    const monthlyRate = interestRate / 12;
-    
-    const monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
-                         (Math.pow(1 + monthlyRate, months) - 1);
-    
-    const totalPayment = monthlyPayment * months + downPayment;
-    const overpayment = totalPayment - price;
-    
-    document.getElementById('paymentInfo').innerHTML = `
-        <h5>Расчет для ${months} месяцев:</h5>
-        <p><strong>Ежемесячный платеж:</strong> ${Math.round(monthlyPayment).toLocaleString()} ₸</p>
-        <p><strong>Переплата:</strong> ${Math.round(overpayment).toLocaleString()} ₸</p>
-        <p><strong>Общая сумма:</strong> ${Math.round(totalPayment).toLocaleString()} ₸</p>
-    `;
-}
 
 function toggleFilterSidebar() {
     const sidebar = document.getElementById('filterSidebar');
